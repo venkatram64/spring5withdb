@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.9.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.3.RELEASE")
         classpath("gradle.plugin.org.hibernate.gradle.tools:hibernatetools-gradle-plugin:1.2.5")
     }
 }
@@ -18,6 +18,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
 jar {
     group 'com.venkat.myspring'
@@ -34,25 +35,30 @@ repositories {
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
-    compile 'org.hibernate:hibernate-core'
+    // https://mvnrepository.com/artifact/org.hibernate/hibernate-core
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.2.Final'
+
+    // https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager
+    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.4.2.Final'
+
     compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
     compile group: 'com.sun.xml.bind', name: 'jaxb-core', version: '2.3.0'
     compile group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.3.0'
     compile group: 'javax.activation', name: 'activation', version: '1.1.1'
-    runtime 'mysql:mysql-connector-java'
-    runtime 'org.springframework.boot:spring-boot-devtools'
+    runtime group: 'mysql', name: 'mysql-connector-java', version: '8.0.15'
+
     testCompile("junit:junit")
 }
 
-import org.hibernate.gradle.tools.Schema;
+/*import org.hibernate.gradle.tools.Schema;
 database {
     def catalog = ["searchapp": new Schema("searchapp", ".*")]
     String user = "root"
-    String password = "root"
+    String password = "mysql"
     String url = "jdbc:mysql://127.0.0.1"
-    Integer port = 3307
+    Integer port = 3306
     String dbName = "searchapp"
     String driver = "com.mysql.cj.jdbc.Driver"
     String dialect = "org.hibernate.dialect.MySQL5Dialect"
     String basePackage = "com.venkat.myspring.dbmodel.orm"
-}
+}*/
