@@ -5,8 +5,10 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.9.RELEASE")
+        classpath("gradle.plugin.org.hibernate.gradle.tools:hibernatetools-gradle-plugin:1.2.5")
     }
 }
+
 
 plugins {
     id "org.hibernate.gradle.tools" version "1.2.5"
@@ -22,8 +24,8 @@ jar {
     version '1.0-SNAPSHOT'
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 11
+targetCompatibility = 11
 
 repositories {
     mavenCentral()
@@ -33,6 +35,10 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile 'org.hibernate:hibernate-core'
+    compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
+    compile group: 'com.sun.xml.bind', name: 'jaxb-core', version: '2.3.0'
+    compile group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.3.0'
+    compile group: 'javax.activation', name: 'activation', version: '1.1.1'
     runtime 'mysql:mysql-connector-java'
     runtime 'org.springframework.boot:spring-boot-devtools'
     testCompile("junit:junit")
@@ -40,11 +46,13 @@ dependencies {
 
 import org.hibernate.gradle.tools.Schema;
 database {
-    String basePackage = "com.venkat.myspring.dbmodel.orm"
+    def catalog = ["searchapp": new Schema("searchapp", ".*")]
     String user = "root"
     String password = "root"
-    String url = "jdbc:mysql://localhost"
+    String url = "jdbc:mysql://127.0.0.1"
     Integer port = 3307
+    String dbName = "searchapp"
+    String driver = "com.mysql.cj.jdbc.Driver"
     String dialect = "org.hibernate.dialect.MySQL5Dialect"
-    String catalog = ["searchapp": new Schema("searchapp", ".*")]
+    String basePackage = "com.venkat.myspring.dbmodel.orm"
 }
