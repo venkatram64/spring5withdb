@@ -1,8 +1,6 @@
 package com.venkat.myspring.dao;
 
 import com.venkat.myspring.model.Topic;
-/*import org.junit.Test;
-import org.junit.runner.RunWith;*/
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +20,8 @@ public class TopicRepositoryTest {
 
     @Test
     public void testBasicSearch(){
-        Topic[] topics = this.testRestTemplate.getForObject("/topics?searchString=spring", Topic[].class);
+        String resourceUrl = "http://localhost:8080";
+        Topic[] topics = this.testRestTemplate.getForObject(resourceUrl + "/topics?searchString=spring", Topic[].class);
         assertTrue(topics.length >=2);
         for(int i = 0; i < topics.length; i++){
             assertTrue(topics[i].getName() != null);
