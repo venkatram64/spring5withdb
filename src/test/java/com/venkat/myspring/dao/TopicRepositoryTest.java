@@ -4,7 +4,6 @@ import com.venkat.myspring.model.Topic;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
@@ -53,13 +52,13 @@ public class TopicRepositoryTest {
         topic.setName(name);
         topic.setDescription(desc);
         topic.setTextField1(tfield1);
-        topic.setGetTextField2(tfield2);
+        topic.setTextField2(tfield2);
         Topic createdTopic = this.testRestTemplate.postForObject("/topics", topic, Topic.class);
         assertTrue(createdTopic.getId() != null);
         assertTrue(createdTopic.getName().equals(name));
         assertTrue(createdTopic.getDescription().equals(desc));
         assertTrue(createdTopic.getTextField1().equals(tfield1));
-        assertTrue(createdTopic.getGetTextField2().equals(tfield2));
+        assertTrue(createdTopic.getTextField2().equals(tfield2));
     }
 
     @Test
@@ -76,7 +75,7 @@ public class TopicRepositoryTest {
         topic.setName(name);
         topic.setDescription("Description");
         topic.setTextField1("Text field 1");
-        topic.setGetTextField2("Text field 2");
+        topic.setTextField2("Text field 2");
         Topic createdTopic = this.testRestTemplate.postForObject("/topics", topic, Topic.class);
 
         String originalName = createdTopic.getName();
@@ -96,7 +95,7 @@ public class TopicRepositoryTest {
         assertTrue(topic.getName().equals(name));
         assertNull(topic.getDescription());
         assertNull(topic.getTextField1());
-        assertNull(topic.getGetTextField2());
+        assertNull(topic.getTextField2());
 
     }
 

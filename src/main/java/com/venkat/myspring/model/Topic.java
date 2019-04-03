@@ -17,7 +17,7 @@ public class Topic implements Serializable {
     @Column(name="text_field1")
     private String textField1;
     @Column(name="text_field2")
-    private String getTextField2;
+    private String textField2;
 
     public Topic(){}
 
@@ -25,7 +25,7 @@ public class Topic implements Serializable {
         this.name = name;
         this.description = description;
         this.textField1 = textField1;
-        this.getTextField2 = getTextField2;
+        this.textField2 = getTextField2;
     }
 
 
@@ -66,11 +66,11 @@ public class Topic implements Serializable {
         this.textField1 = textField1;
     }
 
-    public String getGetTextField2() {
-        return getTextField2;
+    public String getTextField2() {
+        return textField2;
     }
 
-    public void setGetTextField2(String getTextField2) {
-        this.getTextField2 = getTextField2;
+    public void setTextField2(String textField2) {
+        this.textField2 = textField2;
     }
 }
