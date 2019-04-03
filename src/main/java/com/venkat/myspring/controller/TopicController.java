@@ -15,14 +15,15 @@ public class TopicController {
     @Autowired
     private TopicRepository topicRepository;
 
-    @RequestMapping("/all_topics")
+   /* @RequestMapping("/all_topics")
     public List<Topic> getAll(){
         return topicRepository.findAll();
-    }
+    }*/
 
     @GetMapping("/topics")
     public List<Topic> searchTopics(@RequestParam("searchString") String searchString){
-        return topicRepository.findByDescriptionLikeIgnoreCase("%" + searchString + "%");
+        return topicRepository.findByAttributeContainsText("description", searchString);
+        //return topicRepository.findByDescriptionLikeIgnoreCase("%" + searchString + "%");
     }
 
     @GetMapping("/topic/{id}")

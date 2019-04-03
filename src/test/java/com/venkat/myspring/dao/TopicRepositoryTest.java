@@ -53,7 +53,8 @@ public class TopicRepositoryTest {
         topic.setDescription(desc);
         topic.setTextField1(tfield1);
         topic.setTextField2(tfield2);
-        Topic createdTopic = this.testRestTemplate.postForObject("/topics", topic, Topic.class);
+        String resourceUrl = "http://localhost:8080";
+        Topic createdTopic = this.testRestTemplate.postForObject(resourceUrl + "/topics", topic, Topic.class);
         assertTrue(createdTopic.getId() != null);
         assertTrue(createdTopic.getName().equals(name));
         assertTrue(createdTopic.getDescription().equals(desc));
@@ -76,7 +77,8 @@ public class TopicRepositoryTest {
         topic.setDescription("Description");
         topic.setTextField1("Text field 1");
         topic.setTextField2("Text field 2");
-        Topic createdTopic = this.testRestTemplate.postForObject("/topics", topic, Topic.class);
+        String resourceUrl = "http://localhost:8080";
+        Topic createdTopic = this.testRestTemplate.postForObject(resourceUrl + "/topics", topic, Topic.class);
 
         String originalName = createdTopic.getName();
 
@@ -87,7 +89,7 @@ public class TopicRepositoryTest {
 
         // There no "putForObject" in RestTemplate
         HttpEntity<Topic> entity = new HttpEntity<Topic>(topic);
-        ResponseEntity<Topic> updatedTopic = this.testRestTemplate.exchange("/topic/"+createdTopic.getId(), HttpMethod.PUT, entity, Topic.class);
+        ResponseEntity<Topic> updatedTopic = this.testRestTemplate.exchange(resourceUrl + "/topic/"+createdTopic.getId(), HttpMethod.PUT, entity, Topic.class);
         assertTrue(updatedTopic.getBody().getName().equals(name));
 
         // after replacement all other fields should be null
@@ -111,7 +113,8 @@ public class TopicRepositoryTest {
         Topic aNewTopic = new Topic();
         aNewTopic.setName(changedName);
 
-        Topic updatedTopic = this.testRestTemplate.patchForObject("/topic/1", aNewTopic, Topic.class);
+        String resourceUrl = "http://localhost:8080";
+        Topic updatedTopic = this.testRestTemplate.patchForObject(resourceUrl + "/topic/1", aNewTopic, Topic.class);
         assertTrue(updatedTopic.getName().equals(changedName));
 
         topic = doGetTopic(Long.valueOf(1));
@@ -119,7 +122,7 @@ public class TopicRepositoryTest {
 
         // revert back to original name and double check
         aNewTopic.setName(originalName);
-        updatedTopic = this.testRestTemplate.patchForObject("/topic/1", aNewTopic, Topic.class);
+        updatedTopic = this.testRestTemplate.patchForObject(resourceUrl + "/topic/1", aNewTopic, Topic.class);
         assertTrue(updatedTopic.getName().equals(originalName));
         topic = doGetTopic(Long.valueOf(1));
         assertTrue(topic.getName().equals(originalName));
@@ -127,7 +130,8 @@ public class TopicRepositoryTest {
     }
 
     private Topic doGetTopic(Long id){
-        Topic topic = this.testRestTemplate.getForObject("/topic/"+id, Topic.class);
+        String resourceUrl = "http://localhost:8080";
+        Topic topic = this.testRestTemplate.getForObject(resourceUrl + "/topic/"+id, Topic.class);
         assertTrue(topic != null);
         assertTrue(topic.getId().equals(id));
         return topic;
